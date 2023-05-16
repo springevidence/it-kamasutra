@@ -13,6 +13,8 @@ function App() {
             {id: v1(), title: "JS", isDone: true},
             {id: v1(), title: "React", isDone: false},
             {id: v1(), title: "Redux", isDone: false},
+            {id: v1(), title: "Angular", isDone: false},
+            {id: v1(), title: "Vue", isDone: false},
         ])
     // const tasks = result[0]
     // const setTasks = result[1]
@@ -43,6 +45,13 @@ function App() {
         const newTasks = [newTask, ...tasks]
         setTasks(newTasks);
     }
+    function changeTaskStatus(taskId: string, isDone: boolean) {
+        let task = tasks.find(t => t.id === taskId)
+        if (task) {
+            task.isDone = isDone;
+        }
+        setTasks([...tasks])
+    }
 
     return (
         <div className="App">
@@ -52,6 +61,8 @@ function App() {
                 removeTask={removeTask}
                 changeFilter={changeFilter}
                 addTasks={addTasks}
+                changeTaskStatus={changeTaskStatus}
+                filter={filter}
             />
         </div>
     );
