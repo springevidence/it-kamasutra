@@ -5,7 +5,7 @@ import EditableSpan from "./EditableSpan";
 
 type TodoListPropsType = {
     title: string,
-    tasks: taskType[]
+    tasks: TaskType[]
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     addTasks: (title: string, todolistId: string) => void
@@ -16,19 +16,19 @@ type TodoListPropsType = {
     updateTask: (todolistId: string, taskId: string, updateTitle: string) => void
     updateTodolistTitle: (todolistId: string,updateTitle: string) => void
 }
-export type taskType = {
-    id: string
+export type TaskType = {
+    taskId: string
     title: string
     isDone: boolean
 }
 const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter, addTasks, changeTaskStatus, filter,id, removeTodolist, updateTask, updateTodolistTitle}) => {
     const taskJSX: Array<JSX.Element> = tasks.map((task) => {
-        const onClickHandler = () => removeTask(task.id, id)
-        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.id, e.currentTarget.checked, id)
+        const onClickHandler = () => removeTask(task.taskId, id)
+        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
         return (
-            <li className={task.isDone ? "is-done" : ""} key={task.id}>
+            <li className={task.isDone ? "is-done" : ""} key={task.taskId}>
                 <input type="checkbox" checked={task.isDone} onChange={onChangeHandler}/>
-                <EditableSpan oldTitle={task.title} callback={(updateTitle)=> updateTaskHandler(task.id, updateTitle)}/>
+                <EditableSpan oldTitle={task.title} callback={(updateTitle)=> updateTaskHandler(task.taskId, updateTitle)}/>
                 <button onClick={onClickHandler}>x</button>
             </li>
         )

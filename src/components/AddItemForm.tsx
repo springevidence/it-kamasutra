@@ -4,8 +4,8 @@ type PropsType = {
     callback: (title: string) => void
 }
 const AddItemForm = (props: PropsType) => {
-    let [inputTitle, setInputTitle] = useState('')
-    let [error, setError] = useState<string | null>(null);
+    const [inputTitle, setInputTitle] = useState('')
+    const [error, setError] = useState<string | null>(null);
     const addTask = () => {
         if (inputTitle.trim() !== "") {
             props.callback(inputTitle)
