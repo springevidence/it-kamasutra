@@ -1,6 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 import {Simulate} from "react-dom/test-utils";
 import input = Simulate.input;
+import {TextField} from "@material-ui/core";
 
 type PropsType = {
     oldTitle: string
@@ -28,7 +29,14 @@ const EditableSpan = (props: PropsType) => {
     }
     return (
         edit
-            ? <input onChange={onChangeHandler} value={updateTitle} onBlur={editHandler} onKeyDown={onKeyDownHandler} autoFocus/>
+            ? <TextField label="Type item"
+                         value={updateTitle}
+                         variant={"outlined"}
+                         onChange={onChangeHandler}
+                         onBlur={editHandler}
+                         onKeyDown={onKeyDownHandler}
+                         autoFocus/>
+            // <input onChange={onChangeHandler} value={updateTitle} onBlur={editHandler} onKeyDown={onKeyDownHandler} autoFocus/>
             : <span onDoubleClick={editHandler}>{props.oldTitle}</span>
     );
 };

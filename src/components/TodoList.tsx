@@ -2,6 +2,8 @@ import React, {FC, ChangeEvent} from 'react';
 import {FilterValuesType} from "../App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
+import {Button, Checkbox, IconButton} from "@material-ui/core";
+import Delete from "@material-ui/icons/Delete";
 
 type TodoListPropsType = {
     title: string,
@@ -21,16 +23,23 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
+
 const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter, addTasks, changeTaskStatus, filter,id, removeTodolist, updateTask, updateTodolistTitle}) => {
     const taskJSX: Array<JSX.Element> = tasks.map((task) => {
         const onClickHandler = () => removeTask(task.taskId, id)
         const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
         return (
-            <li className={task.isDone ? "is-done" : ""} key={task.taskId}>
-                <input type="checkbox" checked={task.isDone} onChange={onChangeHandler}/>
+            <div className={task.isDone ? "is-done" : ""} key={task.taskId}>
+                <Checkbox
+                    checked={task.isDone} onChange={onChangeHandler}
+                />
+                {/*<input type="checkbox" checked={task.isDone} onChange={onChangeHandler}/>*/}
                 <EditableSpan oldTitle={task.title} callback={(updateTitle)=> updateTaskHandler(task.taskId, updateTitle)}/>
-                <button onClick={onClickHandler}>x</button>
-            </li>
+                {/*<button onClick={onClickHandler}>x</button>*/}
+                <IconButton aria-label="delete" onClick={onClickHandler}>
+                    <Delete />
+                </IconButton>
+            </div>
         )
     })
     const onAllClickHandler = () => changeFilter('all', id)
@@ -50,16 +59,23 @@ const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter
         <div className="todolist">
             <h3>
                 <EditableSpan oldTitle={title} callback={(updateTitle)=> updateTodolistTitleHandler(id, updateTitle)}/>
-                <button onClick={removeTodolistHandler}>x</button>
+                <IconButton aria-label="delete" onClick={removeTodolistHandler}>
+                    <Delete />
+                </IconButton>
+                {/*<button onClick={removeTodolistHandler}>x</button>*/}
             </h3>
             <AddItemForm callback={addTaskHandler}/>
-            <ul>
-                {taskJSX}
-            </ul>
             <div>
-                <button className={filter === "all" ? "active-filter" : ""} onClick={onAllClickHandler}>All</button>
-                <button className={filter === "active" ? "active-filter" : ""} onClick={onActiveClickHandler}>Active</button>
-                <button className={filter === "completed" ? "active-filter" : ""} onClick={onCompletedClickHandler}>Completed</button>
+                {taskJSX}
+            </div>
+            <div>
+                <Button variant={filter === "all" ? "contained" : "text"} onClick={onAllClickHandler} >All</Button>
+                <Button color={"primary"} variant={filter === "active" ? "contained" : "text"} onClick={onActiveClickHandler}>Active</Button>
+                <Button color={"secondary"} variant={filter === "completed" ? "contained" : "text"} onClick={onCompletedClickHandler}>Completed</Button>
+
+                {/*<button className={filter === "all" ? "active-filter" : ""} onClick={onAllClickHandler}>All</button>*/}
+                {/*<button className={filter === "active" ? "active-filter" : ""} onClick={onActiveClickHandler}>Active</button>*/}
+                {/*<button className={filter === "completed" ? "active-filter" : ""} onClick={onCompletedClickHandler}>Completed</button>*/}
             </div>
         </div>
     );
