@@ -1,5 +1,5 @@
 import {
-    AddTodolistAC,
+    addTodolistAC,
     ChangeTodolistFilterAC,
     ChangeTodolistTitleAC,
     RemoveTodolistAC,
@@ -17,7 +17,6 @@ test('correct todolist should be removed', () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 
-    // @ts-ignore
     const endState = todolistsReducer(startState, RemoveTodolistAC(todolistId1))
     if (endState) {
         expect(endState.length).toBe(1)
@@ -38,7 +37,7 @@ test('correct todolist should be added', () => {
         {id: todolistId2, title: 'What to buy', filter: 'all'}
     ]
 
-    const endState = todolistsReducer(startState, AddTodolistAC(newTodolistTitle))
+    const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle))
 
     if (endState) {
         expect(endState.length).toBe(3)

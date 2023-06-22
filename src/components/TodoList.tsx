@@ -2,8 +2,11 @@ import React, {FC, ChangeEvent} from 'react';
 import {FilterValuesType} from "../App";
 import AddItemForm from "./AddItemForm";
 import EditableSpan from "./EditableSpan";
-import {Button, Checkbox, IconButton} from "@material-ui/core";
+import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
+import Checkbox from "./CheckboxInput";
+import CheckboxInput from "./CheckboxInput";
+
 
 type TodoListPropsType = {
     title: string,
@@ -16,7 +19,7 @@ type TodoListPropsType = {
     id: string
     removeTodolist: (id: string) => void
     updateTask: (todolistId: string, taskId: string, updateTitle: string) => void
-    updateTodolistTitle: (todolistId: string,updateTitle: string) => void
+    updateTodolistTitle: (todolistId: string, updateTitle: string) => void
 }
 export type TaskType = {
     taskId: string
@@ -24,20 +27,35 @@ export type TaskType = {
     isDone: boolean
 }
 
-const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter, addTasks, changeTaskStatus, filter,id, removeTodolist, updateTask, updateTodolistTitle}) => {
+const TodoList: FC<TodoListPropsType> = ({
+                                             tasks,
+                                             title,
+                                             removeTask,
+                                             changeFilter,
+                                             addTasks,
+                                             changeTaskStatus,
+                                             filter,
+                                             id,
+                                             removeTodolist,
+                                             updateTask,
+                                             updateTodolistTitle
+                                         }) => {
+    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
+
+    const changeStatusHandler = (tId: string, checked: boolean) => {
+        changeTaskStatus(tId, checked, id)
+    }
     const taskJSX: Array<JSX.Element> = tasks.map((task) => {
         const onClickHandler = () => removeTask(task.taskId, id)
-        const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
         return (
             <div className={task.isDone ? "is-done" : ""} key={task.taskId}>
-                <Checkbox
-                    checked={task.isDone} onChange={onChangeHandler}
+                <CheckboxInput
+                    checked={task.isDone} callback={(checked)=> changeStatusHandler(task.taskId, checked)}
                 />
-                {/*<input type="checkbox" checked={task.isDone} onChange={onChangeHandler}/>*/}
-                <EditableSpan oldTitle={task.title} callback={(updateTitle)=> updateTaskHandler(task.taskId, updateTitle)}/>
-                {/*<button onClick={onClickHandler}>x</button>*/}
+                <EditableSpan oldTitle={task.title}
+                              callback={(updateTitle) => updateTaskHandler(task.taskId, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={onClickHandler}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
             </div>
         )
@@ -58,9 +76,9 @@ const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter
     return (
         <div className="todolist">
             <h3>
-                <EditableSpan oldTitle={title} callback={(updateTitle)=> updateTodolistTitleHandler(id, updateTitle)}/>
+                <EditableSpan oldTitle={title} callback={(updateTitle) => updateTodolistTitleHandler(id, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
-                    <Delete />
+                    <Delete/>
                 </IconButton>
                 {/*<button onClick={removeTodolistHandler}>x</button>*/}
             </h3>
@@ -69,9 +87,11 @@ const TodoList: FC<TodoListPropsType> = ({tasks, title, removeTask, changeFilter
                 {taskJSX}
             </div>
             <div>
-                <Button variant={filter === "all" ? "contained" : "text"} onClick={onAllClickHandler} >All</Button>
-                <Button color={"primary"} variant={filter === "active" ? "contained" : "text"} onClick={onActiveClickHandler}>Active</Button>
-                <Button color={"secondary"} variant={filter === "completed" ? "contained" : "text"} onClick={onCompletedClickHandler}>Completed</Button>
+                <Button variant={filter === "all" ? "contained" : "text"} onClick={onAllClickHandler}>All</Button>
+                <Button color={"primary"} variant={filter === "active" ? "contained" : "text"}
+                        onClick={onActiveClickHandler}>Active</Button>
+                <Button color={"secondary"} variant={filter === "completed" ? "contained" : "text"}
+                        onClick={onCompletedClickHandler}>Completed</Button>
 
                 {/*<button className={filter === "all" ? "active-filter" : ""} onClick={onAllClickHandler}>All</button>*/}
                 {/*<button className={filter === "active" ? "active-filter" : ""} onClick={onActiveClickHandler}>Active</button>*/}
