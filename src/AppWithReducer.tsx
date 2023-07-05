@@ -1,4 +1,4 @@
-import React, { useReducer} from 'react';
+import React, {Reducer, useReducer} from 'react';
 import './App.css';
 import TodoList, {TaskType} from "./components/TodoList";
 import {v1} from "uuid";
@@ -11,6 +11,7 @@ import {
     tasksReducer
 } from "./state/tasks-reducer";
 import {
+    ActionsType,
     addTodolistAC,
     changeTodolistFilterAC,
     changeTodolistTitleAC,
@@ -32,7 +33,7 @@ function AppWithReducers() {
     let todolistID1 = v1()
     let todolistID2 = v1()
 
-    let [todoLists, dispatchToTodolist] = useReducer(todolistsReducer, [
+    let [todoLists, dispatchToTodolist] = useReducer<Reducer<Array<TodoListType>, ActionsType>>(todolistsReducer, [
         {id: todolistID1, title: "What to learn", filter: "all"},
         {id: todolistID2, title: "What to buy", filter: "all"}
     ])

@@ -5,7 +5,8 @@ import {AddCircle} from "@material-ui/icons";
 type PropsType = {
     callback: (title: string) => void
 }
-const AddItemForm = (props: PropsType) => {
+const AddItemForm = React.memo((props: PropsType) => {
+    console.log('AddItemForm is called')
     const [inputTitle, setInputTitle] = useState('')
     const [error, setError] = useState<string | null>(null);
     const addTask = () => {
@@ -20,17 +21,15 @@ const AddItemForm = (props: PropsType) => {
         setInputTitle(e.currentTarget.value)
     }
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+        if (error !== null) {
+            setError(null);
+        }
         if (event.key === "Enter") {
             addTask()
         }
     }
     return (
         <div>
-            {/*<input value={inputTitle}*/}
-            {/*       onChange={onChangeHandler}*/}
-            {/*       onKeyDown={onKeyDownHandler}*/}
-            {/*       className= {error ? "error" : ""}/>*/}
             <TextField label="Type item"
                        value={inputTitle}
                        variant={"outlined"}
@@ -41,10 +40,8 @@ const AddItemForm = (props: PropsType) => {
             <IconButton color="primary" onClick={addTask}>
                 <AddCircle/>
             </IconButton>
-            {/*<button onClick={addTask}>+</button>*/}
-            {/*{error && <div className="error-message">{error}</div>}*/}
         </div>
     );
-};
+});
 
 export default AddItemForm;

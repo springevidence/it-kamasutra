@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import './App.css';
 import TodoList, {TaskType} from "./components/TodoList";
 import {useState} from "react";

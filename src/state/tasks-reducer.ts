@@ -51,7 +51,7 @@ export const removeTaskAC = (todoListId: string, taskId: string):RemoveTaskActio
         type:'REMOVE TASK',
         taskId: taskId,
         todoListId: todoListId
-    }
+    } as const
 }
 export const addTaskAC = (todoListId: string, title: string):AddTaskActionType => {
     return {
