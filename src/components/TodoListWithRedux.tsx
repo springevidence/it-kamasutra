@@ -45,7 +45,7 @@ let dispatch = useDispatch()
         return (
             <div className={task.isDone ? "is-done" : ""} key={task.taskId}>
                 <CheckboxInput
-                    checked={task.isDone} callback={(checked) => changeStatusHandler(task.taskId, checked)}
+                    checked={task.isDone} onChange={(checked) => changeStatusHandler(task.taskId, checked)}
                 />
                 <EditableSpan oldTitle={task.title}
                               callback={(updateTitle) => updateTaskHandler(task.taskId, updateTitle)}/>

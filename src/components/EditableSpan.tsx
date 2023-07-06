@@ -7,7 +7,8 @@ type PropsType = {
     oldTitle: string
     callback: (updateTitle: string) => void
 }
-const EditableSpan = (props: PropsType) => {
+const EditableSpan = React.memo((props: PropsType) => {
+    console.log('EditableSpan')
     const [edit, setEdit] = useState(false)
     const editHandler = () => {
         if (edit) {
@@ -36,9 +37,8 @@ const EditableSpan = (props: PropsType) => {
                          onBlur={editHandler}
                          onKeyDown={onKeyDownHandler}
                          autoFocus/>
-            // <input onChange={onChangeHandler} value={updateTitle} onBlur={editHandler} onKeyDown={onKeyDownHandler} autoFocus/>
             : <span onDoubleClick={editHandler}>{props.oldTitle}</span>
     );
-};
+});
 
 export default EditableSpan;

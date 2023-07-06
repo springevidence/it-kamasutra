@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import TodoList, {TaskType} from "./components/TodoList";
+import {TodoList, TaskType} from "./components/TodoList";
 import {useState} from "react";
 import {v1} from "uuid";
 import AddItemForm from "./components/AddItemForm";
