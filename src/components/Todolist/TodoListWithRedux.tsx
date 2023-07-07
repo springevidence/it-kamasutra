@@ -1,16 +1,16 @@
 import React, {FC, ChangeEvent} from 'react';
-import {FilterValuesType} from "../App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {FilterValuesType} from "../../App";
+import AddItemForm from "../AddItemForm";
+import EditableSpan from "../EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import Checkbox from "./CheckboxInput";
-import CheckboxInput from "./CheckboxInput";
-import {TodoListType} from "../AppWithRedux";
+import Checkbox from "../CheckboxInput";
+import CheckboxInput from "../CheckboxInput";
+import {TodoListType} from "../../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
-import {AppRootStateType} from "../state/store";
-import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../state/tasks-reducer";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../state/todolists-reducer";
+import {AppRootStateType} from "../../state/store";
+import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer";
+import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../state/todolists-reducer";
 
 
 type TodoListPropsType = {
@@ -48,7 +48,7 @@ let dispatch = useDispatch()
                     checked={task.isDone} onChange={(checked) => changeStatusHandler(task.taskId, checked)}
                 />
                 <EditableSpan oldTitle={task.title}
-                              callback={(updateTitle) => updateTaskHandler(task.taskId, updateTitle)}/>
+                              onChange={(updateTitle) => updateTaskHandler(task.taskId, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={onClickHandler}>
                     <Delete/>
                 </IconButton>
@@ -77,7 +77,7 @@ let dispatch = useDispatch()
     return (
         <div className="todolist">
             <h3>
-                <EditableSpan oldTitle={title} callback={(updateTitle) => updateTodolistTitleHandler(id, updateTitle)}/>
+                <EditableSpan oldTitle={title} onChange={(updateTitle) => updateTodolistTitleHandler(id, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
                     <Delete/>
                 </IconButton>

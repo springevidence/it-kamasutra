@@ -1,7 +1,9 @@
-/*.App {*/
-/*  padding: 30px;*/
-/*  display: flex;*/
-/*}*/
+.app {
+  background-image: url('./background/background.jpg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+}
 
 /*.App > div {*/
 /*  margin-right: 50px;*/

@@ -6,7 +6,7 @@ type PropsType = {
     callback: (title: string) => void
 }
 const AddItemForm = React.memo((props: PropsType) => {
-    console.log('AddItemForm is called')
+    console.log('AddItemForm')
     const [inputTitle, setInputTitle] = useState('')
     const [error, setError] = useState<string | null>(null);
     const addTask = () => {

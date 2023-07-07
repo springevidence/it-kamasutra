@@ -1,6 +1,6 @@
 import React from 'react';
-import './App.css';
-import {TodoList, TaskType} from "./components/TodoList";
+import './App.module.css';
+import {TodoList, TaskType} from "./components/Todolist/TodoList";
 import {useState} from "react";
 import {v1} from "uuid";
 import AddItemForm from "./components/AddItemForm";
@@ -108,7 +108,7 @@ function App() {
                                         changeTaskStatus={changeTaskStatus}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
-                                        updateTask={updateTask}
+                                        changeTaskTitle={updateTask}
                                         updateTodolistTitle={updateTodolistTitle}
                                     />
                                 </Paper>

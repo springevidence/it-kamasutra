@@ -1,11 +1,11 @@
 import React, {FC, ChangeEvent, useCallback} from 'react';
-import {FilterValuesType} from "../App";
-import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
+import {FilterValuesType} from "../../App";
+import AddItemForm from "../AddItemForm";
+import EditableSpan from "../EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import {Task} from "./Task";
-
+import {Task} from "../Task";
+import style from './Todolist.module.css'
 
 type TodoListPropsType = {
     title: string,
@@ -17,7 +17,7 @@ type TodoListPropsType = {
     filter: FilterValuesType
     id: string
     removeTodolist: (id: string) => void
-    updateTask: (todolistId: string, taskId: string, updateTitle: string) => void
+    changeTaskTitle: (todolistId: string, taskId: string, updateTitle: string) => void
     updateTodolistTitle: (todolistId: string, updateTitle: string) => void
 }
 export type TaskType = {
@@ -36,25 +36,14 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
                                                                filter,
                                                                id,
                                                                removeTodolist,
-                                                               updateTask,
+                                                               changeTaskTitle,
                                                                updateTodolistTitle
                                                            }) => {
-    // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
     console.log('TodoList')
-
-    const changeStatusHandler = (tId: string, checked: boolean) => {
-        changeTaskStatus(tId, checked, id)
-    }
-    const onAllClickHandler = useCallback(() => changeFilter('all', id), [changeFilter, id])
-    const onActiveClickHandler = useCallback(() => changeFilter('active', id), [changeFilter, id])
-    const onCompletedClickHandler = useCallback(() => changeFilter('completed', id), [changeFilter, id])
     const removeTodolistHandler = () => removeTodolist(id)
     const addTaskHandler = useCallback((title: string) => {
         addTasks(title, id)
     }, [addTasks, id])
-    const updateTaskHandler = useCallback((tID: string, updateTitle: string) => {
-        updateTask(id, tID, updateTitle);
-    }, [id, updateTask])
     const updateTodolistTitleHandler = useCallback((id: string, updateTitle: string) => {
         updateTodolistTitle(id, updateTitle);
     }, [id, updateTodolistTitle])
@@ -66,10 +55,13 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
     if (filter === "completed") {
         tasksForTodolist = tasks.filter(t => t.isDone);
     }
+    const onAllClickHandler = useCallback(() => changeFilter('all', id), [changeFilter, id])
+    const onActiveClickHandler = useCallback(() => changeFilter('active', id), [changeFilter, id])
+    const onCompletedClickHandler = useCallback(() => changeFilter('completed', id), [changeFilter, id])
     return (
-        <div className="todolist">
+        <div className={style.todolist}>
             <h3>
-                <EditableSpan oldTitle={title} callback={(updateTitle) => updateTodolistTitleHandler(id, updateTitle)}/>
+                <EditableSpan oldTitle={title} onChange={(updateTitle) => updateTodolistTitleHandler(id, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={removeTodolistHandler}>
                     <Delete/>
                 </IconButton>
@@ -78,13 +70,12 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
             <div>
                 {tasks.map(task => <Task task={task}
                                          removeTask={removeTask}
-                                         updateTaskHandler={updateTask}
+                                         changeTaskTitle={changeTaskTitle}
                                          todolistId={id}
-                                         key={task.taskId}
-                                         changeTaskStatus={changeTaskStatus}/>
+                                         key={task.taskId} changeTaskStatus={changeTaskStatus}/>
                 )}
             </div>
-            <div>
+            <div className={style.filtredButtons}>
                 <Button variant={filter === "all" ? "contained" : "text"} onClick={onAllClickHandler}>All</Button>
                 <Button color={"primary"} variant={filter === "active" ? "contained" : "text"}
                         onClick={onActiveClickHandler}>Active</Button>

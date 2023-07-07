@@ -5,7 +5,7 @@ import {TextField} from "@material-ui/core";
 
 type PropsType = {
     oldTitle: string
-    callback: (updateTitle: string) => void
+    onChange: (updateTitle: string) => void
 }
 const EditableSpan = React.memo((props: PropsType) => {
     console.log('EditableSpan')
@@ -21,7 +21,7 @@ const EditableSpan = React.memo((props: PropsType) => {
         setUpdateTitle(e.currentTarget.value)
     }
     const addTaskHandler = () => {
-        props.callback(updateTitle)
+        props.onChange(updateTitle)
     }
     const onKeyDownHandler = (event: KeyboardEvent<HTMLInputElement>) => {
         if (event.key === "Enter") {

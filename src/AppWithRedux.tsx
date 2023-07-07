@@ -1,8 +1,11 @@
 import React, {useCallback, useReducer} from 'react';
-import './App.css';
-import {TodoList, TaskType} from "./components/TodoList";
+import style from './App.module.css';
+import {TodoList, TaskType} from "./components/Todolist/TodoList";
 import AddItemForm from "./components/AddItemForm";
-import {Container, Grid, Paper} from "@material-ui/core";
+import {AppBar, Box, Button, Container, Grid, Paper, Toolbar} from "@material-ui/core";
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
 import {
     addTaskAC,
     changeTaskStatusAC, changeTaskTitleAC,
@@ -28,6 +31,7 @@ export type TasksStateType = {
 }
 
 function AppWithRedux() {
+    console.log('AppWithRedux')
     const todoLists = useSelector<AppRootStateType, Array<TodoListType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
     const dispatch = useDispatch()
@@ -50,7 +54,7 @@ function AppWithRedux() {
     const addTodoList = useCallback((newTitle: string) => {
         dispatch(addTodolistAC(newTitle))
     }, [])
-    const updateTask = useCallback((todolistId: string, taskId: string, updateTitle: string) => {
+    const changeTaskTitle = useCallback((todolistId: string, taskId: string, updateTitle: string) => {
         dispatch(changeTaskTitleAC(todolistId, taskId, updateTitle))
     }, [])
     const updateTodolistTitle = useCallback((todolistId: string, updateTitle: string) => {
@@ -58,7 +62,26 @@ function AppWithRedux() {
     },[])
 
     return (
-        <div className="App">
+        <div className={style.app}>
+            <Box sx={{ flexGrow: 1 }}>
+                <AppBar position="static" color={"inherit"}>
+                    <Toolbar>
+                        <IconButton
+                            size={"large"}
+                            edge={"start"}
+                            color={"inherit"}
+                            aria-label={"menu"}
+                            sx={{ mr: 2 }}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant={"h6"} component={"div"} sx={{ flexGrow: 1 }}>
+                            Your Board
+                        </Typography>
+                        <Button color="inherit">Login</Button>
+                    </Toolbar>
+                </AppBar>
+            </Box>
             <Container fixed>
                 <Grid container style={{padding: "20px"}}>
                     <AddItemForm callback={addTodoList}/>
@@ -79,7 +102,7 @@ function AppWithRedux() {
                                         changeTaskStatus={changeTaskStatus}
                                         filter={tl.filter}
                                         removeTodolist={removeTodolist}
-                                        updateTask={updateTask}
+                                        changeTaskTitle={changeTaskTitle}
                                         updateTodolistTitle={updateTodolistTitle}
                                     />
                                 </Paper>
