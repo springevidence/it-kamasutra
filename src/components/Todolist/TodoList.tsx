@@ -1,5 +1,5 @@
 import React, {FC, ChangeEvent, useCallback} from 'react';
-import {FilterValuesType} from "../../App";
+import {FilterValuesType} from "../../AppWithRedux";
 import AddItemForm from "../AddItemForm";
 import EditableSpan from "../EditableSpan";
 import {Button, IconButton} from "@material-ui/core";

@@ -1,10 +1,8 @@
-import React, {FC, ChangeEvent} from 'react';
-import {FilterValuesType} from "../../App";
+import React, {FC} from 'react';
 import AddItemForm from "../AddItemForm";
 import EditableSpan from "../EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import Checkbox from "../CheckboxInput";
 import CheckboxInput from "../CheckboxInput";
 import {TodoListType} from "../../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";

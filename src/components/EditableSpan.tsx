@@ -1,6 +1,4 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
-import {Simulate} from "react-dom/test-utils";
-import input = Simulate.input;
 import {TextField} from "@material-ui/core";
 
 type PropsType = {
