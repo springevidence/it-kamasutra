@@ -48,13 +48,14 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
         updateTodolistTitle(id, updateTitle);
     }, [id, updateTodolistTitle])
 
-    let tasksForTodolist = tasks
-    if (filter === "active") {
-        tasksForTodolist = tasks.filter(t => !t.isDone);
-    }
-    if (filter === "completed") {
-        tasksForTodolist = tasks.filter(t => t.isDone);
-    }
+    // let tasksForTodolist = tasks
+    // if (filter === "active") {
+    //     tasksForTodolist = tasks.filter(t => !t.isDone);
+    // }
+    // if (filter === "completed") {
+    //     tasksForTodolist = tasks.filter(t => t.isDone);
+    // }
+
     const onAllClickHandler = useCallback(() => changeFilter('all', id), [changeFilter, id])
     const onActiveClickHandler = useCallback(() => changeFilter('active', id), [changeFilter, id])
     const onCompletedClickHandler = useCallback(() => changeFilter('completed', id), [changeFilter, id])

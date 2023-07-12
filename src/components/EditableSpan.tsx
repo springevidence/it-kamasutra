@@ -9,14 +9,16 @@ type PropsType = {
 }
 const EditableSpan = React.memo((props: PropsType) => {
     console.log('EditableSpan')
+
     const [edit, setEdit] = useState(false)
+    const [updateTitle, setUpdateTitle] = useState(props.oldTitle)
+
     const editHandler = () => {
         if (edit) {
             addTaskHandler()
         }
         setEdit(!edit)
     }
-    const [updateTitle, setUpdateTitle] = useState(props.oldTitle)
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setUpdateTitle(e.currentTarget.value)
     }

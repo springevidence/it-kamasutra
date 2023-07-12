@@ -1,4 +1,4 @@
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback} from 'react';
 import style from './App.module.css';
 import {TodoList, TaskType} from "./components/Todolist/TodoList";
 import AddItemForm from "./components/AddItemForm";
@@ -89,6 +89,13 @@ function AppWithRedux() {
                 <Grid container spacing={5}>
                     {todoLists.map(tl => {
                         let tasksForTodolist = tasks[tl.id]
+                        // let tasksForTodolist = tasks
+                        if (tl.filter === "active") {
+                            tasksForTodolist = tasks[tl.id].filter(t => !t.isDone);
+                        }
+                        if (tl.filter === "completed") {
+                            tasksForTodolist = tasks[tl.id].filter(t => t.isDone);
+                        }
                             return <Grid key={tl.id} item>
                                 <Paper elevation={3} style={{padding: "10px"}}>
                                     <TodoList
