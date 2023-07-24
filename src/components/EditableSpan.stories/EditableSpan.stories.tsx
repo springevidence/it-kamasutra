@@ -8,7 +8,7 @@ const meta: Meta<typeof EditableSpan> = {
     tags: ['autodocs'],
     argTypes: {
         oldTitle: {
-            description: 'Start value empty. Add value push button set string.'
+            description: 'Title value'
         },
         onChange: {
             description: 'Value EditableSpan changed'

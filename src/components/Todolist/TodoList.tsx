@@ -1,10 +1,10 @@
 import React, {FC, ChangeEvent, useCallback} from 'react';
 import {FilterValuesType} from "../../AppWithRedux";
-import AddItemForm from "../AddItemForm";
-import EditableSpan from "../EditableSpan";
+import AddItemForm from "../AddItemForm/AddItemForm";
+import EditableSpan from "../EditableSpan.stories/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import {Task} from "../Task";
+import {Task} from "../Task/Task";
 import style from './Todolist.module.css'
 
 type TodoListPropsType = {

@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import AddItemForm from "../AddItemForm";
-import EditableSpan from "../EditableSpan";
+import AddItemForm from "../AddItemForm/AddItemForm";
+import EditableSpan from "../EditableSpan.stories/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import CheckboxInput from "../CheckboxInput";
+import CheckboxInput from "../CheckboxInput/CheckboxInput";
 import {TodoListType} from "../../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
