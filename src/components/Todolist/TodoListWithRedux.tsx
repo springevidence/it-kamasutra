@@ -4,21 +4,26 @@ import EditableSpan from "../EditableSpan.stories/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import CheckboxInput from "../CheckboxInput/CheckboxInput";
-import {TodoListType} from "../../AppWithRedux";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../state/store";
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from "../../state/tasks-reducer";
-import {changeTodolistFilterAC, changeTodolistTitleAC, removeTodolistAC} from "../../state/todolists-reducer";
+import {
+    changeTodolistFilterAC,
+    changeTodolistTitleAC,
+    removeTodolistAC,
+    TodolistDomainType
+} from "../../state/todolists-reducer";
+import {TaskStatuses, TaskType, TodolistType} from "../../api/todolists-api";
 
 
 type TodoListPropsType = {
-    todolist: TodoListType
+    todolist: TodolistDomainType
 }
-export type TaskType = {
-    taskId: string
-    title: string
-    isDone: boolean
-}
+// export type TaskType = {
+//     taskId: string
+//     title: string
+//     isDone: boolean
+// }
 
 const TodoList: FC<TodoListPropsType> = ({
                                              todolist
@@ -26,27 +31,27 @@ const TodoList: FC<TodoListPropsType> = ({
     // const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => changeTaskStatus(task.taskId, e.currentTarget.checked, id)
     let {id, title, filter} = todolist
     let tasks = useSelector<AppRootStateType, Array<TaskType>>(state => state.tasks[id])
-let dispatch = useDispatch()
+    let dispatch = useDispatch()
     if (filter === "active") {
-        tasks = tasks.filter(t => !t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.New);
     }
     if (filter === "completed") {
-        tasks = tasks.filter(t => t.isDone);
+        tasks = tasks.filter(t => t.status === TaskStatuses.Completed);
     }
 
     const changeStatusHandler = (tId: string, checked: boolean) => {
-        const action = changeTaskStatusAC(id, tId, checked)
+        const action = changeTaskStatusAC(id, tId, checked ? TaskStatuses.Completed : TaskStatuses.New)
         dispatch(action)
     }
     const taskJSX: Array<JSX.Element> = tasks.map((task) => {
-        const onClickHandler = () => dispatch(removeTaskAC(id, task.taskId))
+        const onClickHandler = () => dispatch(removeTaskAC(id, task.id))
         return (
-            <div className={task.isDone ? "is-done" : ""} key={task.taskId}>
+            <div className={task.status === TaskStatuses.Completed ? "is-done" : ""} key={task.id}>
                 <CheckboxInput
-                    checked={task.isDone} onChange={(checked) => changeStatusHandler(task.taskId, checked)}
+                    checked={task.status === TaskStatuses.Completed} onChange={(checked) => changeStatusHandler(task.id, checked)}
                 />
                 <EditableSpan oldTitle={task.title}
-                              onChange={(updateTitle) => updateTaskHandler(task.taskId, updateTitle)}/>
+                              onChange={(updateTitle) => updateTaskHandler(task.id, updateTitle)}/>
                 <IconButton aria-label="delete" onClick={onClickHandler}>
                     <Delete/>
                 </IconButton>

@@ -1,11 +1,13 @@
 import React, {FC, ChangeEvent, useCallback} from 'react';
-import {FilterValuesType} from "../../AppWithRedux";
 import AddItemForm from "../AddItemForm/AddItemForm";
 import EditableSpan from "../EditableSpan.stories/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import {Task} from "../Task/Task";
 import style from './Todolist.module.css'
+import {TaskStatuses, TaskType} from '../../api/todolists-api'
+import {FilterValuesType} from "../../state/todolists-reducer";
+
 
 type TodoListPropsType = {
     title: string,
@@ -13,18 +15,18 @@ type TodoListPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
     changeFilter: (filter: FilterValuesType, todolistId: string) => void
     addTasks: (title: string, todolistId: string) => void
-    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
     filter: FilterValuesType
     id: string
     removeTodolist: (id: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, updateTitle: string) => void
     updateTodolistTitle: (todolistId: string, updateTitle: string) => void
 }
-export type TaskType = {
-    taskId: string
-    title: string
-    isDone: boolean
-}
+// export type TaskType = {
+//     taskId: string
+//     title: string
+//     isDone: boolean
+// }
 
 export const TodoList: FC<TodoListPropsType> = React.memo(({
                                                                tasks,
@@ -73,7 +75,7 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
                                          removeTask={removeTask}
                                          changeTaskTitle={changeTaskTitle}
                                          todolistId={id}
-                                         key={task.taskId} changeTaskStatus={changeTaskStatus}/>
+                                         key={task.id} changeTaskStatus={changeTaskStatus}/>
                 )}
             </div>
             <div className={style.filtredButtons}>

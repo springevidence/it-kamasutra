@@ -3,26 +3,29 @@ import CheckboxInput from "../CheckboxInput/CheckboxInput";
 import EditableSpan from "../EditableSpan.stories/EditableSpan";
 import {IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import {TaskType} from "../Todolist/TodoList";
+import {TaskStatuses, TaskType} from "../../api/todolists-api";
 
 type TaskPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
     changeTaskTitle: (todolistId: string, taskId: string, newTitle: string ) => void
     task: TaskType
     todolistId: string
-    changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
+    changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
 }
 export const Task = React.memo((props: TaskPropsType) => {
     console.log('Task')
-    const removeTaskHandler = () => props.removeTask(props.task.taskId, props.todolistId)
+    const removeTaskHandler = () => props.removeTask(props.task.id, props.todolistId)
+    // const changeTaskStatusHandler = (checked: boolean) => {
+    //     props.changeTaskStatus(props.task.id, checked, props.todolistId)
+    // }
     const changeTaskStatusHandler = (checked: boolean) => {
-        props.changeTaskStatus(props.task.taskId, checked, props.todolistId)
+        props.changeTaskStatus(props.task.id, checked ? TaskStatuses.Completed : TaskStatuses.New, props.todolistId)
     }
-    const changeTaskTitleHandler = useCallback((updateTitle: string) => props.changeTaskTitle(props.todolistId, props.task.taskId, updateTitle), [props.task.taskId, props.todolistId, props.changeTaskTitle])
+    const changeTaskTitleHandler = useCallback((updateTitle: string) => props.changeTaskTitle(props.todolistId, props.task.id, updateTitle), [props.task.id, props.todolistId, props.changeTaskTitle])
     return (
-        <div className={props.task.isDone ? "is-done" : ""} key={props.task.taskId}>
+        <div className={props.task.status === TaskStatuses.Completed ? "is-done" : ""} key={props.task.id}>
             <CheckboxInput
-                checked={props.task.isDone}
+                checked={props.task.status === TaskStatuses.Completed}
                 onChange={changeTaskStatusHandler}
             />
             <EditableSpan oldTitle={props.task.title}

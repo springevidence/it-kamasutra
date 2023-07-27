@@ -5,7 +5,6 @@ export default {
     title: 'API'
 }
 
-
 export const GetTodolists = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
@@ -20,7 +19,7 @@ export const GetTodolists = () => {
 export const CreateTodolist = () => {
     const [state, setState] = useState<any>(null)
     useEffect(() => {
-        todolistsAPI.createTodolist('What to eat')
+        todolistsAPI.createTodolist('What to learn')
             .then((res) => {
                 // debugger
                 setState(res.data)
@@ -30,14 +29,12 @@ export const CreateTodolist = () => {
     return <div>{JSON.stringify(state)}</div>
 }
 export const DeleteTodolist = () => {
-    const todolistId = '4cae0e7d-d881-45c1-8b3d-7dd0b2ad1f27'
-
     const [state, setState] = useState<any>(null)
+    const todolistId = 'ec5d7bb3-93b3-4fe8-b224-e1bae91cd2fc'
     useEffect(() => {
-        const todolistId = 'c21fa8d3-33ee-435e-bbd1-fc4e6f4d7c50'
         todolistsAPI.deleteTodolist(todolistId)
             .then((res) => {
-                debugger
+                // debugger
                 setState(res.data)
             })
     }, [])
@@ -46,8 +43,8 @@ export const DeleteTodolist = () => {
 }
 export const UpdateTodolistTitle = () => {
     const [state, setState] = useState<any>(null)
+    const todolistId = '50f67dab-1ea2-48fe-a4f2-46081995ef0e'
     useEffect(() => {
-        const todolistId = 'c21fa8d3-33ee-435e-bbd1-fc4e6f4d7c50'
         todolistsAPI.updateTodolist(todolistId, 'What to watch')
             .then((res) => {
                 // debugger
@@ -62,8 +59,8 @@ export const UpdateTodolistTitle = () => {
 
 export const GetTasks = () => {
     const [state, setState] = useState<any>(null)
+    const todolistId = '50f67dab-1ea2-48fe-a4f2-46081995ef0e'
     useEffect(() => {
-        const todolistId = 'c21fa8d3-33ee-435e-bbd1-fc4e6f4d7c50'
         todolistsAPI.getTasks(todolistId)
             .then((res) => {
                 // debugger
@@ -72,30 +69,81 @@ export const GetTasks = () => {
     }, [])
     return <div>{JSON.stringify(state)}</div>
 }
+
+export const CreateTasks = () => {
+    const [state, setState] = useState<any>(null)
+    const [todolistId, setTodolistId] = useState<any>('')
+    const [taskTitle, setTaskTitle] = useState<any>('')
+    const createTasks = () => {
+        todolistsAPI.createTask(todolistId, taskTitle)
+            .then((res) => {
+                // debugger
+                setState(res.data)
+            })
+    }
+    return <div>{JSON.stringify(state)}
+        <div>
+            <input placeholder={'todolistId'} value={todolistId} onChange={(e)=> {setTodolistId(e.currentTarget.value)}}/>
+            <input placeholder={'task title'} value={taskTitle} onChange={(e)=> {setTaskTitle(e.currentTarget.value)}}/>
+            <button onClick={createTasks}>create task</button>
+        </div>
+    </div>
+}
+export const UpdateTask = () => {
+    const [state, setState] = useState<any>(null)
+    const [todolistId, setTodolistId] = useState<string>('')
+    const [taskId, setTaskId] = useState<string>('')
+    const [title, setTitle] = useState<any>('some title')
+    const [description, setDescription] = useState<string>('some description')
+    const [status, setStatus] = useState<number>(0)
+    const [priority, setPriority] = useState<number>(0)
+    const [startDate, setStartDate] = useState<string>('')
+    const [deadline, setDeadline] = useState<string>('')
+    const createTasks = () => {
+        todolistsAPI.updateTask(todolistId, taskId, {
+            description: description,
+            deadline: '',
+            priority: priority,
+            status: status,
+            title: title,
+            startDate: ''
+        })
+            .then((res) => {
+                // debugger
+                setState(res.data)
+            })
+    }
+    return <div>{JSON.stringify(state)}
+        <div>
+            <input placeholder={'todolistId'} value={todolistId} onChange={(e)=> {setTodolistId(e.currentTarget.value)}}/>
+            <input placeholder={'task title'} value={title} onChange={(e)=> {setTitle(e.currentTarget.value)}}/>
+            <input placeholder={'task id'} value={taskId} onChange={(e)=> {setTaskId(e.currentTarget.value)}}/>
+            <input placeholder={'description'} value={description} onChange={(e)=> {setDescription(e.currentTarget.value)}}/>
+            <input placeholder={'status'} value={status} onChange={(e)=> {setStatus(+e.currentTarget.value)}}/>
+            <input placeholder={'priority'} value={priority} onChange={(e)=> {setPriority(+e.currentTarget.value)}}/>
+            <button onClick={createTasks}>update task</button>
+        </div>
+    </div>
+}
+
+
 export const DeleteTask = () => {
     const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        const todolistId = 'c21fa8d3-33ee-435e-bbd1-fc4e6f4d7c50'
-        const taskId = ''
+    const [taskId, setTaskId] = useState<string>('')
+    const [todolistId, setTodolistId] = useState<any>('')
+
+    const deleteTask = () => {
         todolistsAPI.deleteTask(todolistId, taskId)
             .then((res) => {
                 // debugger
                 setState(res.data)
             })
-    }, [])
-    return <div>{JSON.stringify(state)}</div>
-}
-export const UpdateTask = () => {
-    const [state, setState] = useState<any>(null)
-    useEffect(() => {
-        const todolistId = 'c21fa8d3-33ee-435e-bbd1-fc4e6f4d7c50'
-        const taskId = ''
-        const model = {title: 'html'}
-        todolistsAPI.updateTask(todolistId, taskId, model)
-            .then((res) => {
-                // debugger
-                setState(res.data)
-            })
-    }, [])
-    return <div>{JSON.stringify(state)}</div>
+    }
+    return <div>{JSON.stringify(state)}
+        <div>
+            <input placeholder={'todolistId'} value={todolistId} onChange={(e)=> {setTodolistId(e.currentTarget.value)}}/>
+            <input placeholder={'task id'} value={taskId} onChange={(e)=> {setTaskId(e.currentTarget.value)}}/>
+            <button onClick={deleteTask}>delete task</button>
+        </div>
+    </div>
 }
