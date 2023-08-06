@@ -1,7 +1,7 @@
 import {Meta, StoryObj} from "@storybook/react";
 import {Task} from "./Task";
 import {action} from '@storybook/addon-actions'
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../../../api/todolists-api";
 
 const meta: Meta<typeof Task> = {
     title: 'TODOLISTS/Task',

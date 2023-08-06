@@ -1,5 +1,5 @@
 import {v1} from 'uuid'
-import {TasksStateType} from '../app/App'
+import {TasksStateType} from '../../app/App'
 import {
     addTaskAC,
     removeTaskAC,
@@ -7,7 +7,7 @@ import {
     tasksReducer
 } from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../api/todolists-api";
+import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
 
 let todolistID1: string
 let todolistID2: string
