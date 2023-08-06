@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
-import CheckboxInput from "../CheckboxInput/CheckboxInput";
-import EditableSpan from "../EditableSpan.stories/EditableSpan";
+import CheckboxInput from "../../components/CheckboxInput/CheckboxInput";
+import EditableSpan from "../../components/EditableSpan.stories/EditableSpan";
 import {IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import {TaskStatuses, TaskType} from "../../api/todolists-api";

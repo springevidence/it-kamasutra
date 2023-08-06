@@ -1,12 +1,14 @@
-import React, {FC, ChangeEvent, useCallback} from 'react';
-import AddItemForm from "../AddItemForm/AddItemForm";
-import EditableSpan from "../EditableSpan.stories/EditableSpan";
+import React, {FC, useCallback, useEffect} from 'react';
+import AddItemForm from "../../components/AddItemForm/AddItemForm";
+import EditableSpan from "../../components/EditableSpan.stories/EditableSpan";
 import {Button, IconButton} from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
-import {Task} from "../Task/Task";
 import style from './Todolist.module.css'
 import {TaskStatuses, TaskType} from '../../api/todolists-api'
 import {FilterValuesType} from "../../state/todolists-reducer";
+import {fetchTasksTC} from "../../state/tasks-reducer";
+import {useAppDispatch} from "../../state/store";
+import {Task} from "../Task/Task";
 
 
 type TodoListPropsType = {
@@ -22,11 +24,6 @@ type TodoListPropsType = {
     changeTaskTitle: (todolistId: string, taskId: string, updateTitle: string) => void
     updateTodolistTitle: (todolistId: string, updateTitle: string) => void
 }
-// export type TaskType = {
-//     taskId: string
-//     title: string
-//     isDone: boolean
-// }
 
 export const TodoList: FC<TodoListPropsType> = React.memo(({
                                                                tasks,
@@ -42,6 +39,10 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
                                                                updateTodolistTitle
                                                            }) => {
     console.log('TodoList')
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(fetchTasksTC(id))
+    }, [])
     const removeTodolistHandler = () => removeTodolist(id)
     const addTaskHandler = useCallback((title: string) => {
         addTasks(title, id)
@@ -89,16 +90,3 @@ export const TodoList: FC<TodoListPropsType> = React.memo(({
     );
 })
 
-//type ButtonWithMemoPropsType = {
-//     title: string
-//     color: 'inherit' | 'primary' | 'secondary' | 'success' | 'error' | 'info' | 'warning'
-//     variant: 'text' | 'outlined' | 'contained'
-//     onClick: () => void
-// }
-//
-// const ButtonWithMemo = memo((props: ButtonWithMemoPropsType) => {
-//     return <Button variant={props.variant}
-//             onClick={props.onClick}
-//             color={props.color}>{props.title}
-//     </Button>
-// })
