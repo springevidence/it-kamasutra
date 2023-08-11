@@ -6,6 +6,8 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import {TaskType} from "../api/todolists-api";
 import {TodolistsList} from "../pages/TodolistList/TodolistsList";
+import {LinearProgress} from "@mui/material";
+import ErrorSnackbar from "../components/ErrorSnackbar/ErrorSnackbar";
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
@@ -17,6 +19,7 @@ function App() {
     return (
         <div className={style.app}>
             <Box sx={{flexGrow: 1}}>
+                <ErrorSnackbar/>
                 <AppBar position="static" color={"inherit"}>
                     <Toolbar>
                         <IconButton
@@ -33,6 +36,7 @@ function App() {
                         </Typography>
                         <Button color="inherit">Login</Button>
                     </Toolbar>
+                    <LinearProgress />
                 </AppBar>
             </Box>
             <Container fixed>
