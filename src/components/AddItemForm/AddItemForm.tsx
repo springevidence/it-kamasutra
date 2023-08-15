@@ -4,14 +4,16 @@ import {AddCircle} from "@material-ui/icons";
 
 type PropsType = {
     callback: (title: string) => void
+    disabled?: boolean
 }
-const AddItemForm = React.memo((props: PropsType) => {
+const AddItemForm = React.memo(({callback, disabled = false}: PropsType) => {
     console.log('AddItemForm')
+
     const [inputTitle, setInputTitle] = useState('')
     const [error, setError] = useState<string | null>(null);
     const addTask = () => {
         if (inputTitle.trim() !== "") {
-            props.callback(inputTitle)
+            callback(inputTitle)
             setInputTitle('')
         } else {
             setError("Field is required")
@@ -30,14 +32,15 @@ const AddItemForm = React.memo((props: PropsType) => {
     }
     return (
         <div>
-            <TextField label="Type item"
+            <TextField disabled={disabled}
+                       label="Type item"
                        value={inputTitle}
                        variant={"outlined"}
                        onChange={onChangeHandler}
                        onKeyDown={onKeyDownHandler}
                        error={!!error}
                        helperText={error}/>
-            <IconButton color="primary" onClick={addTask}>
+            <IconButton color="primary" onClick={addTask} disabled={disabled}>
                 <AddCircle/>
             </IconButton>
         </div>

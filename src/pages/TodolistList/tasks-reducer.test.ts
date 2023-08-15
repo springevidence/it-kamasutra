@@ -1,10 +1,9 @@
 import {v1} from 'uuid'
-import {TasksStateType} from '../../app/App'
 import {
     addTaskAC,
     removeTaskAC,
     setTasksAC,
-    tasksReducer
+    tasksReducer, TasksStateType
 } from "./tasks-reducer";
 import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
 import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";

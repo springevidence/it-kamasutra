@@ -1,6 +1,6 @@
 const initialState: InitialStateType = {
     status: 'idle',
-    error: 'some error'
+    error: null
 }
 
 export const appReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
@@ -15,22 +15,23 @@ export const appReducer = (state: InitialStateType = initialState, action: Actio
 }
 
 // action creators
-export const setErrorAC = (error: string | null) => ({
+export const setAppErrorAC = (error: string | null) => ({
     type: 'APP/SET-ERROR',
     error
 } as const)
-export const setStatusAC = (status: RequestStatusType) => ({
+export const setAppStatusAC = (status: RequestStatusType) => ({
     type: 'APP/SET-STATUS',
     status
 } as const)
 
 
 //types
+export type setErrorActionType = ReturnType<typeof setAppErrorAC>
+export type setStatusActionType = ReturnType<typeof setAppStatusAC>
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export type InitialStateType = {
     status: RequestStatusType
     error: string | null
 }
-type ActionsType = ReturnType<typeof setErrorAC> |
-    ReturnType<typeof setStatusAC>
+type ActionsType = setErrorActionType | setStatusActionType

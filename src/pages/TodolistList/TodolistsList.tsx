@@ -10,19 +10,24 @@ import {
     removeTodolistTC,
     TodolistDomainType
 } from "./todolists-reducer";
-import {addTaskTC, deleteTaskTC, updateTaskTC} from "./tasks-reducer";
+import {addTaskTC, deleteTaskTC, TasksStateType, updateTaskTC} from "./tasks-reducer";
 import {TaskStatuses} from "../../api/todolists-api";
 import {Grid, Paper} from "@material-ui/core";
 import AddItemForm from "../../components/AddItemForm/AddItemForm";
 import {TodoList} from "./Todolist/TodoList";
-import {TasksStateType} from "../../app/App";
 
-export const TodolistsList: React.FC = () => {
+type PropsType = {
+    demo?: boolean
+}
+export const TodolistsList: React.FC<PropsType> = ({demo = false }) => {
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todoLists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
 
     const dispatch = useAppDispatch()
     useEffect(() => {
+        if (demo) {
+            return
+        }
         dispatch(fetchTodolistsTC())
     }, [])
 
@@ -76,15 +81,14 @@ export const TodolistsList: React.FC = () => {
                         return <Grid key={tl.id} item>
                             <Paper elevation={3} style={{padding: "10px"}}>
                                 <TodoList
+                                    todolist={tl}
+                                    demo={demo}
                                     key={tl.id}
-                                    id={tl.id}
-                                    title={tl.title}
                                     tasks={tasksForTodolist}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTasks={addTasks}
                                     changeTaskStatus={changeTaskStatus}
-                                    filter={tl.filter}
                                     removeTodolist={removeTodolist}
                                     changeTaskTitle={changeTaskTitle}
                                     updateTodolistTitle={updateTodolistTitle}

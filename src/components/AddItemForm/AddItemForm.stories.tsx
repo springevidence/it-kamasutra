@@ -10,7 +10,7 @@ const meta: Meta<typeof AddItemForm> = {
         callback: {
             description: 'Button clicked inside form',
             action: 'clicked'
-        }
+        },
     }
 }
 export default meta;
@@ -21,3 +21,11 @@ export const AddItemFormStory: Story = {
         callback: action('Button clicked inside form')
     },
 };
+export const AddItemFormDisabledExample: Story = {
+    args: {
+        callback: action('Button clicked inside form'),
+        disabled: true
+    },
+};
+
+
