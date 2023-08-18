@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosResponse} from "axios";
 
 const settings = {
     withCredentials: true,
@@ -17,7 +17,7 @@ export const todolistsAPI = {
         return instance.get<Array<TodolistType>>('todo-lists')
     },
     createTodolist(title: string) {
-        return instance.post<ResponseType<{item: TodolistType}>>('todo-lists', {title: title})
+        return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {title: title})
     },
     deleteTodolist(todolistId: string) {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
@@ -29,7 +29,7 @@ export const todolistsAPI = {
     getTasks(todolistId: string) {
         return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
     },
-    createTask(todolistId: string, taskTitle: string){
+    createTask(todolistId: string, taskTitle: string) {
         return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${todolistId}/tasks`, {title: taskTitle})
     },
     updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
@@ -39,6 +39,19 @@ export const todolistsAPI = {
         return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
     }
 }
+
+export const authAPI = {
+    login(data: LoginParamsType) {
+        return instance.post<null, AxiosResponse<ResponseType<{ userId?: number }>>, LoginParamsType>('auth/login', data)
+    },
+    me() {
+        return instance.get<ResponseType<AuthMeType>>('auth/me')
+    },
+    logout() {
+        return instance.delete<ResponseType>('auth/login')
+    }
+}
+
 
 //types
 export type TodolistType = {
@@ -52,19 +65,22 @@ export type ResponseType<D = {}> = {
     messages: string[]
     data: D
 }
+
 export enum TaskStatuses {
     New = 0,
     InProgress = 1,
     Completed = 2,
-    Draft =3
+    Draft = 3
 }
+
 export enum TaskPriorities {
     Low = 0,
     Middle = 1,
     High = 2,
-    Urgently =3,
+    Urgently = 3,
     Later = 4
 }
+
 export type TaskType = {
     description: string
     title: string
@@ -88,5 +104,16 @@ export type UpdateTaskModelType = {
     status: number
     priority: number
     startDate: string
-    deadline : string
+    deadline: string
+}
+export type LoginParamsType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string   //or boolean
+}
+export type AuthMeType = {
+    id: number
+    email: string
+    login: string
 }

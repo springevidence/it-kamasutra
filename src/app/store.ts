@@ -4,6 +4,7 @@ import {AnyAction, applyMiddleware, combineReducers, compose, legacy_createStore
 import thunkMiddleware, {ThunkDispatch} from "redux-thunk";
 import {useDispatch} from "react-redux";
 import {appReducer} from "./app-reducer";
+import {loginReducer} from "../pages/Login/login-reducer";
 
 declare global {
     interface Window {
@@ -15,7 +16,8 @@ declare global {
 const rootReducer = combineReducers({
     tasks: tasksReducer,
     todoLists: todolistsReducer,
-    app: appReducer
+    app: appReducer,
+    login: loginReducer
 })
 // непосредственно создаём store
 export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware));
