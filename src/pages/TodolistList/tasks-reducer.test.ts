@@ -1,33 +1,93 @@
-import {v1} from 'uuid'
-import {
-    addTaskAC,
-    removeTaskAC,
-    setTasksAC,
-    tasksReducer, TasksStateType
-} from "./tasks-reducer";
-import {addTodolistAC, removeTodolistAC, setTodolistsAC} from "./todolists-reducer";
-import {TaskPriorities, TaskStatuses} from "../../api/todolists-api";
+import { v1 } from 'uuid'
+import { addTaskAC, removeTaskAC, setTasksAC, tasksReducer, TasksStateType } from './tasks-reducer'
+import { addTodolistAC, removeTodolistAC, setTodolistsAC } from './todolists-reducer'
+import { TaskPriorities, TaskStatuses } from '../../api/todolists-api'
 
 let todolistID1: string
 let todolistID2: string
 let startState: TasksStateType
 beforeEach(() => {
-    todolistID1 = v1()
-    todolistID2 = v1()
+  todolistID1 = v1()
+  todolistID2 = v1()
 
-    startState = {
-        'todolistID1': [
-            {id: v1(), title: 'HTML&CSS', status: TaskStatuses.Completed, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-            {id: v1(), title: 'JS', status: TaskStatuses.Completed, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-            {id: v1(), title: 'ReactJS',status: TaskStatuses.New, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-            {id: v1(), title: 'Redux', status: TaskStatuses.New, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-
-        ],
-        'todolistID2': [
-            {id: v1(), title: 'Book', status: TaskStatuses.Completed, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-            {id: v1(), title: 'Watch', status: TaskStatuses.New, description: '', priority: TaskPriorities.Low, startDate: '', deadline: '', todoListId: 'fgdosrg8rgjuh', order: 0, addedDate:''},
-        ]
-    }
+  startState = {
+    todolistID1: [
+      {
+        id: v1(),
+        title: 'HTML&CSS',
+        status: TaskStatuses.Completed,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+      {
+        id: v1(),
+        title: 'JS',
+        status: TaskStatuses.Completed,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+      {
+        id: v1(),
+        title: 'ReactJS',
+        status: TaskStatuses.New,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+      {
+        id: v1(),
+        title: 'Redux',
+        status: TaskStatuses.New,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+    ],
+    todolistID2: [
+      {
+        id: v1(),
+        title: 'Book',
+        status: TaskStatuses.Completed,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+      {
+        id: v1(),
+        title: 'Watch',
+        status: TaskStatuses.New,
+        description: '',
+        priority: TaskPriorities.Low,
+        startDate: '',
+        deadline: '',
+        todoListId: 'fgdosrg8rgjuh',
+        order: 0,
+        addedDate: '',
+      },
+    ],
+  }
 })
 
 // test('correct task should be deleted from correct array', () => {
@@ -74,24 +134,22 @@ beforeEach(() => {
 // })
 
 test('new array should be added when new todolist is added', () => {
+  const action = addTodolistAC({
+    id: '',
+    title: 'new todolist',
+    addedDate: '',
+    order: 0,
+  })
+  const endState = tasksReducer(startState, action)
 
-    const action = addTodolistAC({
-        id: '',
-        title: 'new todolist',
-        addedDate: '',
-        order: 0
-    })
-    const endState = tasksReducer(startState, action)
+  const keys = Object.keys(endState)
+  const newKey = keys.find((k) => k != 'todolistID1' && k != 'todolistID2')
+  if (!newKey) {
+    throw Error('new key should be added')
+  }
 
-
-    const keys = Object.keys(endState)
-    const newKey = keys.find(k => k != 'todolistID1' && k != 'todolistID2')
-    if (!newKey) {
-        throw Error('new key should be added')
-    }
-
-    expect(keys.length).toBe(3)
-    expect(endState[newKey]).toStrictEqual([])
+  expect(keys.length).toBe(3)
+  expect(endState[newKey]).toStrictEqual([])
 })
 // test('property with todolistId should be deleted', () => {
 //

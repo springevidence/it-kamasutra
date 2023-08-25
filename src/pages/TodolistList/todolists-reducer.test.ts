@@ -1,24 +1,28 @@
 import {
-    addTodolistAC, changeTodolistEntityStatusAC,
-    changeTodolistFilterAC,
-    changeTodolistTitleAC, FilterValuesType,
-    removeTodolistAC, setTodolistsAC, TodolistDomainType,
-    todolistsReducer
+  addTodolistAC,
+  changeTodolistEntityStatusAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  FilterValuesType,
+  removeTodolistAC,
+  setTodolistsAC,
+  TodolistDomainType,
+  todolistsReducer,
 } from './todolists-reducer'
-import {v1} from 'uuid'
-import {TodolistType} from "../../api/todolists-api";
-import {RequestStatusType} from "../../app/app-reducer";
+import { v1 } from 'uuid'
+import { TodolistType } from 'api/todolists-api'
+import { RequestStatusType } from 'app/app-reducer'
 
 let todolistID1: string
 let todolistID2: string
 let startState: Array<TodolistDomainType>
-beforeEach(()=> {
-    todolistID1 = v1()
-    todolistID2 = v1()
-    startState = [
-        {id: todolistID1, title: 'What to learn', filter: 'all',  entityStatus: 'idle', addedDate: '', order: 0},
-        {id: todolistID2, title: 'What to buy', filter: 'all', entityStatus: 'idle', addedDate: '', order: 0}
-    ]
+beforeEach(() => {
+  todolistID1 = v1()
+  todolistID2 = v1()
+  startState = [
+    { id: todolistID1, title: 'What to learn', filter: 'all', entityStatus: 'idle', addedDate: '', order: 0 },
+    { id: todolistID2, title: 'What to buy', filter: 'all', entityStatus: 'idle', addedDate: '', order: 0 },
+  ]
 })
 
 // test('correct todolist should be removed', () => {
