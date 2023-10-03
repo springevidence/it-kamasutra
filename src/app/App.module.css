@@ -1,5 +1,5 @@
 .app {
-  background-image: url('../background/background.jpg');
+  background-image: url('common/background/background.jpg');
   background-size: cover;
   background-position: center;
   min-height: 100vh;

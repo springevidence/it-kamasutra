@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { todolistsAPI } from 'api/todolists-api'
+import { todolistsAPI } from 'features/TodolistList/todolists-api'
 
 export default {
   title: 'API',
@@ -68,7 +68,7 @@ export const CreateTasks = () => {
   const [todolistId, setTodolistId] = useState<any>('')
   const [taskTitle, setTaskTitle] = useState<any>('')
   const createTasks = () => {
-    todolistsAPI.createTask(todolistId, taskTitle).then((res) => {
+    todolistsAPI.createTask({ todolistId, title: taskTitle }).then((res) => {
       // debugger
       setState(res.data)
     })
