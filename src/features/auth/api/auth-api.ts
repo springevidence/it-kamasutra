@@ -1,24 +1,19 @@
 import { AxiosResponse } from 'axios'
 import { instance } from 'common/api/base-api'
-import { ResponseType } from 'common/types/types'
+import { BaseResponseType } from 'common/types/types'
 
 export const authAPI = {
   login(data: LoginParamsType) {
-    return instance.post<
-      null,
-      AxiosResponse<
-        ResponseType<{
-          userId?: number
-        }>
-      >,
-      LoginParamsType
-    >('auth/login', data)
+    return instance.post<null, AxiosResponse<BaseResponseType<{ userId?: number }>>, LoginParamsType>(
+      'auth/login',
+      data,
+    )
   },
   me() {
-    return instance.get<ResponseType<AuthMeType>>('auth/me')
+    return instance.get<BaseResponseType<AuthMeType>>('auth/me')
   },
   logout() {
-    return instance.delete<ResponseType>('auth/login')
+    return instance.delete<BaseResponseType>('auth/login')
   },
 }
 

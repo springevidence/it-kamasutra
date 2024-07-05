@@ -6,7 +6,7 @@ type PropsType = {
   onChange: (updateTitle: string) => void
 }
 const EditableSpan = React.memo((props: PropsType) => {
-  console.log('EditableSpan')
+
 
   const [edit, setEdit] = useState(false)
   const [updateTitle, setUpdateTitle] = useState(props.oldTitle)

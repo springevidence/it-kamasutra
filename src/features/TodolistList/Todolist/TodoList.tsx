@@ -4,12 +4,12 @@ import EditableSpan from 'common/components/EditableSpan.stories/EditableSpan'
 import { Button, IconButton } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
 import style from './Todolist.module.css'
-import { FilterValuesType, TodolistDomainType } from '../todolists-reducer'
+import { FilterValuesType, TodolistDomainType } from '../todolistsSlice'
 import { Task } from './Task/Task'
 import { useAppDispatch } from 'common/hooks/UseAppDispatch'
 import { TaskType } from 'features/TodolistList/todolists-api'
 import { TaskStatuses } from 'common/enum/enum'
-import { tasksThunks } from 'features/TodolistList/tasks-reducer'
+import { tasksThunks } from 'features/TodolistList/tasksSlice'
 
 type TodoListPropsType = {
   tasks: TaskType[]
@@ -46,9 +46,9 @@ export const TodoList: FC<TodoListPropsType> = React.memo(
       }
       dispatch(tasksThunks.fetchTasks(todolist.id))
     }, [])
+
     const removeTodolistHandler = () => removeTodolist(todolist.id)
-    const addTaskHandler = useCallback(
-      (title: string) => {
+    const addTaskHandler = useCallback((title: string) => {
         addTasks(title, todolist.id)
       },
       [addTasks, todolist.id],

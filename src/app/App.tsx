@@ -4,18 +4,21 @@ import { AppBar, Box, Button, Container, Toolbar } from '@material-ui/core'
 import MenuIcon from '@mui/icons-material/Menu'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
-import { TodolistsList } from 'features/TodolistList/TodolistsList'
+import { TodolistsList } from 'features/TodolistList/ui/TodolistsList'
 import { CircularProgress, LinearProgress } from '@mui/material'
 import ErrorSnackbar from '../common/components/ErrorSnackbar/ErrorSnackbar'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from './store'
-import { RequestStatusType } from './app-reducer'
+import { RequestStatusType } from './appSlice'
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Login } from 'features/Login/Login'
-import { initializedAppTC, logoutTC } from 'features/Login/login-reducer'
+
+
 import { selectAppIsInitialized, selectAppStatus } from 'app/app-selector'
-import { selectLoginIsLoggedIn } from 'features/Login/login-selector'
+
 import { useAppDispatch } from 'common/hooks/UseAppDispatch'
+import { loginThunks } from 'features/auth/model/loginSlice'
+import { Login } from 'features/auth/ui/Login/Login'
+import { selectLoginIsLoggedIn } from 'features/auth/model/login-selector'
 
 type PropsType = {
   demo?: boolean
@@ -30,11 +33,11 @@ function App({ demo = false }: PropsType) {
   const isLoggedIn = useSelector<AppRootStateType, boolean>(selectLoginIsLoggedIn)
 
   useEffect(() => {
-    dispatch(initializedAppTC())
+    dispatch(loginThunks.initializedApp())
   }, [])
 
   const logoutHandler = useCallback(() => {
-    dispatch(logoutTC())
+    dispatch(loginThunks.logout())
   }, [])
 
   if (!isInitialized) {

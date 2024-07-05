@@ -4,9 +4,9 @@ import {
   todolistsActions,
   todolistsReducer,
   todolistsThunks,
-} from './todolists-reducer'
+} from './todolistsSlice'
 import { v1 } from 'uuid'
-import { RequestStatusType } from 'app/app-reducer'
+import { RequestStatusType } from 'app/appSlice'
 import { TodolistType } from 'features/TodolistList/todolists-api'
 
 let todolistId1: string
@@ -53,7 +53,11 @@ test('correct todolist should be added', () => {
 test('correct todolist should change its name', () => {
   let newTodolistTitle = 'New Todolist'
 
-  const action = todolistsActions.changeTodolistTitle({ todolistId: todolistId2, title: newTodolistTitle })
+  const action = todolistsThunks.changeTodolistTitle.fulfilled(
+    { todolistId: todolistId2, title: newTodolistTitle },
+    'requestId',
+    { todolistId: todolistId2, title: newTodolistTitle },
+  )
 
   const endState = todolistsReducer(startState, action)
 

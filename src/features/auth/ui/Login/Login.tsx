@@ -7,22 +7,31 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
-import { useFormik } from 'formik'
+import { FormikHelpers, useFormik } from 'formik'
 import { useSelector } from 'react-redux'
-import { loginTC } from './login-reducer'
 import { AppRootStateType } from 'app/store'
 import { Navigate } from 'react-router-dom'
-import { selectLoginIsLoggedIn } from 'features/Login/login-selector'
+
 import { useAppDispatch } from 'common/hooks/UseAppDispatch'
 
-type FormikErrorType = {
-  email?: string
-  password?: string
-  rememberMe?: boolean
-}
+import { BaseResponseType } from 'common/types/types'
+import { selectLoginIsLoggedIn } from 'features/auth/model/login-selector'
+import { loginThunks } from 'features/auth/model/loginSlice'
+
+// type FormikErrorType = {
+//   email?: string
+//   password?: string
+//   rememberMe?: boolean
+// }
 export const Login = () => {
   const dispatch = useAppDispatch()
   const isLoggedIn = useSelector<AppRootStateType, boolean>(selectLoginIsLoggedIn)
+
+  type FormValues = {
+    email: string
+    password: string
+    rememberMe: boolean
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -31,24 +40,29 @@ export const Login = () => {
       rememberMe: false,
     },
     validate: (values) => {
-      const errors: FormikErrorType = {}
-
-      if (!values.email) {
-        errors.email = 'Required'
-      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-      }
-      if (!values.password) {
-        errors.password = 'Required'
-      } else if (values.password.length < 4) {
-        errors.password = 'Must be more 3 symbols'
-      }
-
-      return errors
+      // const errors: FormikErrorType = {}
+      //
+      // if (!values.email) {
+      //   errors.email = 'Required'
+      // } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      //   errors.email = 'Invalid email address'
+      // }
+      // if (!values.password) {
+      //   errors.password = 'Required'
+      // } else if (values.password.length < 4) {
+      //   errors.password = 'Must be more 3 symbols'
+      // }
+      // return errors
     },
-    onSubmit: (values) => {
-      dispatch(loginTC(values))
-      formik.resetForm()
+    onSubmit: (values, formikHelpers: FormikHelpers<FormValues>) => {
+      dispatch(loginThunks.login(values))
+        .unwrap()
+        .catch((error: BaseResponseType) => {
+          error.fieldsErrors?.forEach((fieldError) => {
+            formikHelpers.setFieldError(fieldError.field, fieldError.error)
+          })
+        })
+      // formik.resetForm()
     },
   })
   if (isLoggedIn) {
@@ -63,7 +77,7 @@ export const Login = () => {
             <FormLabel>
               <p>
                 To log in get registered
-                <a href={'https://social-network.samuraijs.com/'} target={'_blank'}>
+                <a href={'https://social-network.samuraijs.com/'} rel="noreferrer" target={'_blank'}>
                   {' '}
                   here
                 </a>

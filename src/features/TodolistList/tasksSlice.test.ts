@@ -1,7 +1,6 @@
 import { v1 } from 'uuid'
-import { TasksStateType, tasksReducers, tasksActions, tasksThunks } from './tasks-reducer'
-import { todolistsActions, todolistsThunks } from 'features/TodolistList/todolists-reducer'
-import axios from 'axios'
+import { TasksStateType, tasksReducers, tasksThunks } from './tasksSlice'
+import { todolistsThunks } from 'features/TodolistList/todolistsSlice'
 import { TaskPriorities, TaskStatuses } from 'common/enum/enum'
 import { TaskType } from 'features/TodolistList/todolists-api'
 
@@ -102,7 +101,7 @@ test('correct task should be deleted from correct array', () => {
 
   expect(endState['todolistId1'].length).toBe(3)
   expect(endState['todolistId2'].length).toBe(2)
-  expect(endState['todolistId2'].every((t) => t.id != '2')).toBeTruthy()
+  expect(endState['todolistId2'].every((t) => t.id !== '2')).toBeTruthy()
 })
 
 test('correct task should be added to correct array', () => {
@@ -178,7 +177,7 @@ test('new array should be added when new todolist is added', () => {
   const endState = tasksReducers(startState, action)
 
   const keys = Object.keys(endState)
-  const newKey = keys.find((k) => k != 'todolistId1' && k != 'todolistId2')
+  const newKey = keys.find((k) => k !== 'todolistId1' && k !== 'todolistId2')
   if (!newKey) {
     throw Error('new key should be added')
   }
@@ -186,6 +185,7 @@ test('new array should be added when new todolist is added', () => {
   expect(keys.length).toBe(3)
   expect(endState[newKey]).toEqual([])
 })
+
 test('propertry with todolistId should be deleted', () => {
   const action = todolistsThunks.removeTodolist.fulfilled({ todolistId: 'todolistId2' }, 'requestId', {
     todolistId: 'todolistId2',

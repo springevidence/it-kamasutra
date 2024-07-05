@@ -1,6 +1,6 @@
-import { UpdateDomainTaskModelType } from 'features/TodolistList/tasks-reducer'
+import { UpdateDomainTaskModelType } from 'features/TodolistList/tasksSlice'
 import { TaskPriorities, TaskStatuses } from 'common/enum/enum'
-import { ResponseType } from 'common/types/types'
+import { BaseResponseType } from 'common/types/types'
 import { instance } from 'common/api/base-api'
 
 export const todolistsAPI = {
@@ -8,15 +8,15 @@ export const todolistsAPI = {
     return instance.get<Array<TodolistType>>('todo-lists')
   },
   createTodolist(title: string) {
-    return instance.post<ResponseType<{ item: TodolistType }>>('todo-lists', {
+    return instance.post<BaseResponseType<{ item: TodolistType }>>('todo-lists', {
       title: title,
     })
   },
   deleteTodolist(todolistId: string) {
-    return instance.delete<ResponseType>(`todo-lists/${todolistId}`)
+    return instance.delete<BaseResponseType>(`todo-lists/${todolistId}`)
   },
   updateTodolist(todolistId: string, title: string) {
-    return instance.put<ResponseType>(`todo-lists/${todolistId}`, {
+    return instance.put<BaseResponseType>(`todo-lists/${todolistId}`, {
       title: title,
     })
   },
@@ -25,13 +25,15 @@ export const todolistsAPI = {
     return instance.get<GetTaskResponse>(`todo-lists/${todolistId}/tasks`)
   },
   createTask(arg: AddTaskArgType) {
-    return instance.post<ResponseType<{ item: TaskType }>>(`todo-lists/${arg.todolistId}/tasks`, { title: arg.title })
+    return instance.post<BaseResponseType<{ item: TaskType }>>(`todo-lists/${arg.todolistId}/tasks`, {
+      title: arg.title,
+    })
   },
   updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
-    return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
+    return instance.put<BaseResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
   },
   deleteTask(todolistId: string, taskId: string) {
-    return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
+    return instance.delete<BaseResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`)
   },
 }
 
@@ -51,7 +53,10 @@ export type ArgRemoveTaskType = {
   todolistId: string
   taskId: string
 }
-
+export type ArgUpdateTodolistTitleType = {
+  todolistId: string
+  title: string
+}
 export type AddTaskArgType = {
   title: string
   todolistId: string
@@ -81,4 +86,10 @@ export type GetTaskResponse = {
   totalCount: number
   error: null | string
   items: TaskType[]
-}
+} 
+
+export const ResultCode = {
+  Success: 0,
+  Error: 1,
+  Captcha: 10,
+} as const

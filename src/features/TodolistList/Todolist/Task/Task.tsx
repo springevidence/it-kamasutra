@@ -13,8 +13,9 @@ type TaskPropsType = {
   todolistId: string
   changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
 }
+
 export const Task = React.memo((props: TaskPropsType) => {
-  console.log('Task')
+
   const removeTaskHandler = () => props.removeTask(props.task.id, props.todolistId)
   // const changeTaskStatusHandler = (checked: boolean) => {
   //     props.changeTaskStatus(props.task.id, checked, props.todolistId)

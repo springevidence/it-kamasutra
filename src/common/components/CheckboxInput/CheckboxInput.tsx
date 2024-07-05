@@ -6,7 +6,6 @@ type CheckboxPropsType = {
   checked: boolean
 }
 const CheckboxInput = memo((props: CheckboxPropsType) => {
-  console.log('CheckboxInput')
   const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     props.onChange(e.currentTarget.checked)
   }

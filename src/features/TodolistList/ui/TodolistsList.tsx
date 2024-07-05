@@ -1,23 +1,18 @@
 import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { AppRootStateType } from 'app/store'
-import {
-  changeTodolistTC,
-  FilterValuesType,
-  TodolistDomainType,
-  todolistsActions,
-  todolistsThunks,
-} from './todolists-reducer'
-import { TasksStateType, tasksThunks } from './tasks-reducer'
+import { FilterValuesType, TodolistDomainType, todolistsActions, todolistsThunks } from '../todolistsSlice'
+import { TasksStateType, tasksThunks } from '../tasksSlice'
 import { Grid, Paper } from '@material-ui/core'
-import AddItemForm from '../../common/components/AddItemForm/AddItemForm'
-import { TodoList } from './Todolist/TodoList'
+import AddItemForm from '../../../common/components/AddItemForm/AddItemForm'
+import { TodoList } from '../Todolist/TodoList'
 import { Navigate } from 'react-router-dom'
-import { selectLoginIsLoggedIn } from 'features/Login/login-selector'
+
 import { selectTodolists } from 'features/TodolistList/todolists-selector'
 import { selectTasks } from 'features/TodolistList/tasks-selector'
 import { useAppDispatch } from 'common/hooks/UseAppDispatch'
 import { TaskStatuses } from 'common/enum/enum'
+import { selectLoginIsLoggedIn } from 'features/auth/model/login-selector'
 
 type PropsType = {
   demo?: boolean
@@ -65,7 +60,7 @@ export const TodolistsList: React.FC<PropsType> = ({ demo = false }) => {
   }, [])
 
   const updateTodolistTitle = useCallback((todolistId: string, updateTitle: string) => {
-    dispatch(changeTodolistTC(todolistId, updateTitle))
+    dispatch(todolistsThunks.changeTodolistTitle({ todolistId, title: updateTitle }))
   }, [])
 
   if (!isLoggedIn) {

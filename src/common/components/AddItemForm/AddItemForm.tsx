@@ -7,7 +7,6 @@ type PropsType = {
   disabled?: boolean
 }
 const AddItemForm = React.memo(({ callback, disabled = false }: PropsType) => {
-  console.log('AddItemForm')
 
   const [inputTitle, setInputTitle] = useState('')
   const [error, setError] = useState<string | null>(null)
