@@ -10,3 +10,10 @@ export type BaseResponseType<D = {}> = {
   data: D
   fieldsErrors: FieldErrorType[]
 }
+
+export const ResultCode = {
+  Success: 0,
+  Error: 1,
+  Captcha: 10,
+} as const
+

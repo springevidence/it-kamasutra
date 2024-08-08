@@ -4,37 +4,30 @@ import EditableSpan from 'common/components/EditableSpan.stories/EditableSpan'
 import { Button, IconButton } from '@material-ui/core'
 import Delete from '@material-ui/icons/Delete'
 import style from './Todolist.module.css'
-import { FilterValuesType, TodolistDomainType } from '../todolistsSlice'
+import { FilterValuesType, TodolistDomainType } from '../../model/todolistsSlice'
 import { Task } from './Task/Task'
 import { useAppDispatch } from 'common/hooks/UseAppDispatch'
-import { TaskType } from 'features/TodolistList/todolists-api'
-import { TaskStatuses } from 'common/enum/enum'
-import { tasksThunks } from 'features/TodolistList/tasksSlice'
+import { tasksThunks } from 'features/TodolistList/model/tasksSlice'
+import { TaskType } from 'features/TodolistList/api/taskApi.types'
 
-type TodoListPropsType = {
+type Props = {
   tasks: TaskType[]
-  removeTask: (taskId: string, todolistId: string) => void
   changeFilter: (filter: FilterValuesType, todolistId: string) => void
   addTasks: (title: string, todolistId: string) => void
-  changeTaskStatus: (taskId: string, status: TaskStatuses, todolistId: string) => void
   removeTodolist: (id: string) => void
-  changeTaskTitle: (todolistId: string, taskId: string, updateTitle: string) => void
   updateTodolistTitle: (todolistId: string, updateTitle: string) => void
   demo?: boolean
   todolist: TodolistDomainType
 }
 
-export const TodoList: FC<TodoListPropsType> = React.memo(
+export const TodoList: FC<Props> = React.memo(
   ({
     demo = false,
     todolist,
     tasks,
-    removeTask,
     changeFilter,
     addTasks,
-    changeTaskStatus,
     removeTodolist,
-    changeTaskTitle,
     updateTodolistTitle,
   }) => {
     console.log('TodoList')
@@ -56,8 +49,7 @@ export const TodoList: FC<TodoListPropsType> = React.memo(
     const updateTodolistTitleHandler = useCallback(
       (id: string, updateTitle: string) => {
         updateTodolistTitle(id, updateTitle)
-      },
-      [todolist.id, updateTodolistTitle],
+      }, []
     )
 
     // let tasksForTodolist = tasks
@@ -94,11 +86,7 @@ export const TodoList: FC<TodoListPropsType> = React.memo(
           {tasks?.map((task) => (
             <Task
               task={task}
-              removeTask={removeTask}
-              changeTaskTitle={changeTaskTitle}
-              todolistId={todolist.id}
               key={task.id}
-              changeTaskStatus={changeTaskStatus}
             />
           ))}
         </div>

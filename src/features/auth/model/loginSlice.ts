@@ -1,13 +1,14 @@
 import { handleServerNetworkError } from 'common/utills/handle-server-network-error'
 import { createSlice } from '@reduxjs/toolkit'
 import { appActions } from 'app/appSlice'
-import { todolistsActions } from 'features/TodolistList/todolistsSlice'
+import { todolistsActions } from 'features/TodolistList/model/todolistsSlice'
 
 import { createAppAsyncThunk } from 'common/utills/createAppAsyncThunk'
 
 import { handleServerAppError } from 'common/utills/handle-server-app-error'
 import { LoginParamsType, authAPI } from '../api/auth-api'
-import { ResultCode } from 'features/TodolistList/todolists-api'
+import { ResultCode } from 'common/types/types'
+
 
 const slice = createSlice({
   name: 'login',

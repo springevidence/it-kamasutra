@@ -1,10 +1,13 @@
 import { handleServerNetworkError } from 'common/utills/handle-server-network-error'
 import { appActions, RequestStatusType } from 'app/appSlice'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ArgUpdateTodolistTitleType, ResultCode, todolistsAPI, TodolistType } from 'features/TodolistList/todolists-api'
+
 import { createAppAsyncThunk } from 'common/utills/createAppAsyncThunk'
 
 import { handleServerAppError } from 'common/utills/handle-server-app-error'
+import { todolistsAPI } from '../api/todolistsApi'
+import { ResultCode } from 'common/types/types'
+import { ArgUpdateTodolistTitleType, TodolistType } from '../api/todolistsApi.types'
 
 const slice = createSlice({
   name: 'todolists',

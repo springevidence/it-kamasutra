@@ -8,9 +8,6 @@ const meta: Meta<typeof Task> = {
   component: Task,
   tags: ['autodocs'],
   args: {
-    changeTaskStatus: action('Status changed inside Task'),
-    changeTaskTitle: action('Title changed inside Task'),
-    removeTask: action('Remove Button clicked changed inside Task'),
     task: {
       id: '12wsdewfijdei',
       title: 'JS',
@@ -22,8 +19,7 @@ const meta: Meta<typeof Task> = {
       todoListId: 'fgdosrg8rgjuh',
       order: 0,
       addedDate: '',
-    },
-    todolistId: 'fgdosrg8rgjuh',
+    }
   },
 }
 export default meta

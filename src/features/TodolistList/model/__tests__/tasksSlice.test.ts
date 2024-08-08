@@ -1,8 +1,8 @@
 import { v1 } from 'uuid'
-import { TasksStateType, tasksReducers, tasksThunks } from './tasksSlice'
-import { todolistsThunks } from 'features/TodolistList/todolistsSlice'
+import { TasksStateType, tasksReducers, tasksThunks } from '../tasksSlice'
+import { todolistsThunks } from 'features/TodolistList/model/todolistsSlice'
 import { TaskPriorities, TaskStatuses } from 'common/enum/enum'
-import { TaskType } from 'features/TodolistList/todolists-api'
+import { TaskType } from 'features/TodolistList/api/todolistsApi'
 
 let todolistID1: string
 let todolistID2: string
